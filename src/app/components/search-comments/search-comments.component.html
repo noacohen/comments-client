@@ -1,3 +1,10 @@
-<p>
-  search-comments works!
-</p>
+<div>
+  <input #postId type="text" placeholder="Enter Post ID">
+  <button name="button" (click)="getComments(postId.value)">Get Comments
+  </button>
+</div>
+<div>
+  <label>Search Comments</label>
+  <input #searchBox type="search">
+</div>
+<app-comments-list [comments]="filteredComments"></app-comments-list>
