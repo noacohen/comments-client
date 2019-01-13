@@ -18,7 +18,6 @@ import { SearchCommentsComponent } from './components/search-comments/search-com
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

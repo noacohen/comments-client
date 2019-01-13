@@ -13,7 +13,7 @@ export class SearchCommentsComponent implements OnInit {
   @ViewChild('searchBox') searchBox: ElementRef;
   private comments: Comment[];
   private filteredComments: Comment[];
-  private debounceTime = 300;
+  private readonly debounceTime = 350;
 
   constructor(private commentsService: CommentsService) {
   }
@@ -44,13 +44,13 @@ export class SearchCommentsComponent implements OnInit {
     this.filteredComments = this.comments.filter((comment: Comment) => comment.body.includes(searchText));
   }
 
-  private setComments(comments: Comment[]): void {
-    this.comments = comments;
-    this.filteredComments = comments;
-  }
-
   private onError(postId: string, error: string) {
     this.setComments([]);
     console.log(`Error occurred while trying to fetch comments.\npostId: ${postId}\nError: ${error}`);
+  }
+
+  private setComments(comments: Comment[]): void {
+    this.comments = comments;
+    this.filteredComments = comments;
   }
 }

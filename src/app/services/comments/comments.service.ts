@@ -15,11 +15,11 @@ export class CommentsService {
 
   public getCommentsByPostId(postId: number): Observable<Comment[]> {
     const commentsService = this.config.getConfig().commentsService;
-    return this.http.get<Comment[]>(`${commentsService}/comments/${postId}`)
+    return this.http.get<Comment[]>(`${commentsService}/${postId}`)
             .pipe(catchError(this.handleError));
   }
 
-  handleError(error) {
+  private handleError(error) {
     let errorMessage = '';
 
     if (error.error instanceof ErrorEvent) {
