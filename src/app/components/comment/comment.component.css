@@ -1,3 +1,7 @@
 .bold {
   font-weight: bold;
 }
+
+.comment-body {
+  margin-top: 7px;
+}

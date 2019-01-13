@@ -1,0 +1,21 @@
+span {
+  margin-right: 5px;
+}
+
+app-comments-list {
+  margin: 20px;
+}
+
+button {
+  background-color: darkgray;
+  margin: 3px;
+}
+
+input[type=search] {
+  background-color: white;
+  width: 230px;
+}
+
+input[type=search]:disabled {
+  background-color: #cccccc;
+}

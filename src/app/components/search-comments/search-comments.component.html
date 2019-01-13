@@ -4,7 +4,6 @@
   </button>
 </div>
 <div>
-  <label>Search Comments</label>
-  <input #searchBox type="search">
+  <input #searchBox type="search" placeholder="Search..." [disabled]="!comments || !comments.length">
 </div>
 <app-comments-list [comments]="filteredComments"></app-comments-list>
