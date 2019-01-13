@@ -13,6 +13,7 @@ export class SearchCommentsComponent implements OnInit {
   @ViewChild('searchBox') searchBox: ElementRef;
   private comments: Comment[];
   private filteredComments: Comment[];
+  private debounceTime = 300;
 
   constructor(private commentsService: CommentsService) {
   }
@@ -23,22 +24,28 @@ export class SearchCommentsComponent implements OnInit {
 
   public getComments(postId: string): void {
     this.commentsService.getCommentsByPostId(postId)
-      .subscribe(comments => this.setComments(comments),
-                 error => this.setComments([]));
+      .subscribe((comments: Comment[]) => this.setComments(comments),
+                 error => this.onError(error, postId));
   }
 
   private subscribeSearch(): void {
-    const inputEvent = fromEvent(this.searchBox.nativeElement, 'input').pipe(map((evt: any) => evt.target.value));
-    const debouncedInput = inputEvent.pipe(debounceTime(500));
-    const subscribe = debouncedInput.subscribe(val => this.filterComments(val));
+    const inputEvent = fromEvent(this.searchBox.nativeElement, 'input')
+                        .pipe(map((event: any) => event.target.value));
+    const debouncedInput = inputEvent.pipe(debounceTime(this.debounceTime));
+    debouncedInput.subscribe(searchText => this.filterComments(searchText));
   }
 
-  private filterComments(filter: string): void {
-    this.filteredComments = this.comments.filter((comment: Comment) => comment.body.includes(filter));
+  private filterComments(searchText: string): void {
+    this.filteredComments = this.comments.filter((comment: Comment) => comment.body.includes(searchText));
   }
 
   private setComments(comments: Comment[]): void {
     this.comments = comments;
     this.filteredComments = comments;
+  }
+
+  private onError(error: Error, postId: string) {
+    this.setComments([]);
+    console.log(`Error occurred while trying to fetch comments.\npostId: ${postId}\nError: ${error.message}`);
   }
 }
