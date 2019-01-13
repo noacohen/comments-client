@@ -9,4 +9,9 @@ describe('CommentsService', () => {
     const service: CommentsService = TestBed.get(CommentsService);
     expect(service).toBeTruthy();
   });
+
+
+  // describe('getCommentsByPostId', () => {
+  //   //it('')
+  // });
 });

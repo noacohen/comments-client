@@ -23,9 +23,14 @@ export class SearchCommentsComponent implements OnInit {
   }
 
   public getComments(postId: string): void {
-    this.commentsService.getCommentsByPostId(postId)
-      .subscribe((comments: Comment[]) => this.setComments(comments),
-                 error => this.onError(error, postId));
+    const postIdNum = Number(postId);
+
+    if (isNaN(postIdNum)) {
+      this.onError(postId, 'Post Id is not a number');
+    } else {
+        this.commentsService.getCommentsByPostId(postIdNum)
+          .subscribe((comments: Comment[]) => this.setComments(comments));
+    }
   }
 
   private subscribeSearch(): void {
@@ -44,8 +49,8 @@ export class SearchCommentsComponent implements OnInit {
     this.filteredComments = comments;
   }
 
-  private onError(error: Error, postId: string) {
+  private onError(postId: string, error: string) {
     this.setComments([]);
-    console.log(`Error occurred while trying to fetch comments.\npostId: ${postId}\nError: ${error.message}`);
+    console.log(`Error occurred while trying to fetch comments.\npostId: ${postId}\nError: ${error}`);
   }
 }
